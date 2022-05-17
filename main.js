@@ -4,6 +4,12 @@ var qs = require('querystring');
 var url_module = require('url');
 
 const redis = require('redis');
+const HTMLContents = require('./html.js')
+
+var scr_ip;
+var scr_out1_name, scr_out2_name, scr_out3_name, scr_out4_name, scr_out5_name, scr_out6_name;
+var scr_out1_src, scr_out2_src, scr_out3_src,scr_out4_src,scr_out5_src,scr_out6_src;
+var scr_out1_dst, scr_out2_dst, scr_out3_dst,scr_out4_dst,scr_out5_dst,scr_out6_dst;
 
 const redis_client = redis.createClient({
   host : 'redis://127.0.0.1',
@@ -22,12 +28,7 @@ var app = http.createServer(function(request,response){
     
     if(request.method == 'GET'){
       console.log('--- request GET ---');
-      
-      //const id_value = redis_client.get('id');
-      redis_client.get('id').then(function(data){
-        console.log('id1 - ' + data);
-      });
-           
+               
       // config URL, images 만 redirect 허용, 나머지는 모드 index.html 
       if(url == '/resource/coretrust_logo.png'){
         redirect_url = './resource/coretrust_logo.png';
@@ -37,15 +38,45 @@ var app = http.createServer(function(request,response){
         }); 
       }
       else{
-        if(url == '/config')
-          redirect_url = './config.html';
-      
-          console.log('redirect to ' + redirect_url);
-            
+        if(url == '/config'){
+             
+          redis_client.get('scr_ip').then(function(data){
+            scr_ip = data;
+          });
+          redis_client.get('scr_out1_name').then(function(data){
+            scr_out1_name = data;
+          });
+          redis_client.get('scr_out2_name').then(function(data){
+            scr_out2_name = data;
+          });
+          redis_client.get('scr_out3_name').then(function(data){
+            scr_out3_name = data;
+          });
+          redis_client.get('scr_out4_name').then(function(data){
+            scr_out4_name = data;
+          });
+          redis_client.get('scr_out5_name').then(function(data){
+            scr_out5_name = data;
+          });
+          redis_client.get('scr_out6_name').then(function(data){
+            scr_out6_name = data;
+          });
+          
+          console.log('config - read from redis, ip -', scr_ip);
+          
+          const contents = HTMLContents.templateHTML_config(
+              scr_ip,
+              scr_out1_name,scr_out2_name,scr_out3_name,scr_out4_name,scr_out5_name,scr_out6_name     
+          );
+          response.writeHead(200);
+          response.end(contents); 
+        }
+        else{          
           fs.readFile(redirect_url, 'utf8', function(err, data){
             response.writeHead(200);
             response.end(data);  
-          });          
+          });
+        }          
       }  
     }else if(request.method == 'POST'){
       console.log('--- request POST ---');
