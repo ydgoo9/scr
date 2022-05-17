@@ -10,18 +10,10 @@ const redis_client = redis.createClient({
   port : 6379,
   db : 0
 });
+
 redis_client.connect();
 
-if(process.argv[2])
-  redis_client.set('id', process.argv[2]);
-else
-  redis_client.set('id', 'nil');
-
 console.log('start web app with nodejs');
-
-var id_value = redis_client.get('id', function(err, reply){
-  return resolve(reply);
-});
 
 var app = http.createServer(function(request,response){
     var url = request.url;
@@ -30,7 +22,12 @@ var app = http.createServer(function(request,response){
     
     if(request.method == 'GET'){
       console.log('--- request GET ---');
-
+      
+      //const id_value = redis_client.get('id');
+      redis_client.get('id').then(function(data){
+        console.log('id1 - ' + data);
+      });
+           
       // config URL, images 만 redirect 허용, 나머지는 모드 index.html 
       if(url == '/resource/coretrust_logo.png'){
         redirect_url = './resource/coretrust_logo.png';
@@ -43,12 +40,12 @@ var app = http.createServer(function(request,response){
         if(url == '/config')
           redirect_url = './config.html';
       
-        console.log('redirect to ' + redirect_url);
-          
-        fs.readFile(redirect_url, 'utf8', function(err, data){
-          response.writeHead(200);
-          response.end(data);  
-        });          
+          console.log('redirect to ' + redirect_url);
+            
+          fs.readFile(redirect_url, 'utf8', function(err, data){
+            response.writeHead(200);
+            response.end(data);  
+          });          
       }  
     }else if(request.method == 'POST'){
       console.log('--- request POST ---');
@@ -72,6 +69,14 @@ var app = http.createServer(function(request,response){
         else if(url == '/ch_config'){
           var out = qs.parse(data.toString());
           
+          redis_client.set('scr_ip', out.scr_ip);
+          redis_client.set('scr_out1_name', out.scr_out1_name);
+          redis_client.set('scr_out2_name', out.scr_out2_name);
+          redis_client.set('scr_out3_name', out.scr_out3_name);
+          redis_client.set('scr_out4_name', out.scr_out4_name);
+          redis_client.set('scr_out5_name', out.scr_out5_name);
+          redis_client.set('scr_out6_name', out.scr_out6_name);
+
           // string template
           var outstr =  `
             Scrambler IP : ${out.scr_ip}
