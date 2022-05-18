@@ -61,12 +61,49 @@ var app = http.createServer(function(request,response){
           redis_client.get('scr_out6_name').then(function(data){
             scr_out6_name = data;
           });
-          
+          redis_client.get('scr_out1_src').then(function(data){
+            scr_out1_src = data;
+          });
+          redis_client.get('scr_out2_src').then(function(data){
+            scr_out2_src = data;
+          });
+          redis_client.get('scr_out3_src').then(function(data){
+            scr_out3_src = data;
+          });
+          redis_client.get('scr_out4_src').then(function(data){
+            scr_out4_src = data;
+          });
+          redis_client.get('scr_out5_src').then(function(data){
+            scr_out5_src = data;
+          });
+          redis_client.get('scr_out6_src').then(function(data){
+            scr_out6_src = data;
+          });
+          redis_client.get('scr_out1_dst').then(function(data){
+            scr_out1_dst = data;
+          });
+          redis_client.get('scr_out2_dst').then(function(data){
+            scr_out2_dst = data;
+          });
+          redis_client.get('scr_out3_dst').then(function(data){
+            scr_out3_dst = data;
+          });
+          redis_client.get('scr_out4_dst').then(function(data){
+            scr_out4_dst = data;
+          });
+          redis_client.get('scr_out5_dst').then(function(data){
+            scr_out5_dst = data;
+          });
+          redis_client.get('scr_out6_dst').then(function(data){
+            scr_out6_dst = data;
+          });
           console.log('config - read from redis, ip -', scr_ip);
-          
+
           const contents = HTMLContents.templateHTML_config(
               scr_ip,
-              scr_out1_name,scr_out2_name,scr_out3_name,scr_out4_name,scr_out5_name,scr_out6_name     
+              scr_out1_name,scr_out2_name,scr_out3_name,scr_out4_name,scr_out5_name,scr_out6_name,
+              scr_out1_src,scr_out2_src,scr_out3_src,scr_out4_src,scr_out5_src,scr_out6_src,
+              scr_out1_dst,scr_out2_dst,scr_out3_dst,scr_out4_dst,scr_out5_dst,scr_out6_dst    
           );
           response.writeHead(200);
           response.end(contents); 
@@ -107,6 +144,18 @@ var app = http.createServer(function(request,response){
           redis_client.set('scr_out4_name', out.scr_out4_name);
           redis_client.set('scr_out5_name', out.scr_out5_name);
           redis_client.set('scr_out6_name', out.scr_out6_name);
+          redis_client.set('scr_out1_src', out.scr_out1_src);
+          redis_client.set('scr_out2_src', out.scr_out2_src);
+          redis_client.set('scr_out3_src', out.scr_out3_src);
+          redis_client.set('scr_out4_src', out.scr_out4_src);
+          redis_client.set('scr_out5_src', out.scr_out5_src);
+          redis_client.set('scr_out6_src', out.scr_out6_src);
+          redis_client.set('scr_out1_dst', out.scr_out1_dst);
+          redis_client.set('scr_out2_dst', out.scr_out2_dst);
+          redis_client.set('scr_out3_dst', out.scr_out3_dst);
+          redis_client.set('scr_out4_dst', out.scr_out4_dst);
+          redis_client.set('scr_out5_dst', out.scr_out5_dst);
+          redis_client.set('scr_out6_dst', out.scr_out6_dst);
 
           // string template
           var outstr =  `
