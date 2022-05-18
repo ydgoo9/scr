@@ -10,6 +10,7 @@ var scr_ip;
 var scr_out1_name, scr_out2_name, scr_out3_name, scr_out4_name, scr_out5_name, scr_out6_name;
 var scr_out1_src, scr_out2_src, scr_out3_src,scr_out4_src,scr_out5_src,scr_out6_src;
 var scr_out1_dst, scr_out2_dst, scr_out3_dst,scr_out4_dst,scr_out5_dst,scr_out6_dst;
+var scr_out1_config,scr_out2_config,scr_out3_config,scr_out4_config,scr_out5_config,scr_out6_config; 
 
 const redis_client = redis.createClient({
   host : 'redis://127.0.0.1',
@@ -28,7 +29,85 @@ var app = http.createServer(function(request,response){
     
     if(request.method == 'GET'){
       console.log('--- request GET ---');
-               
+      
+      // read data from redis server
+      redis_client.get('scr_ip').then(function(data){
+        scr_ip = data;
+      });
+      redis_client.get('scr_out1_name').then(function(data){
+        scr_out1_name = data;
+      });
+      redis_client.get('scr_out2_name').then(function(data){
+        scr_out2_name = data;
+      });
+      redis_client.get('scr_out3_name').then(function(data){
+        scr_out3_name = data;
+      });
+      redis_client.get('scr_out4_name').then(function(data){
+        scr_out4_name = data;
+      });
+      redis_client.get('scr_out5_name').then(function(data){
+        scr_out5_name = data;
+      });
+      redis_client.get('scr_out6_name').then(function(data){
+        scr_out6_name = data;
+      });
+      redis_client.get('scr_out1_src').then(function(data){
+        scr_out1_src = data;
+      });
+      redis_client.get('scr_out2_src').then(function(data){
+        scr_out2_src = data;
+      });
+      redis_client.get('scr_out3_src').then(function(data){
+        scr_out3_src = data;
+      });
+      redis_client.get('scr_out4_src').then(function(data){
+        scr_out4_src = data;
+      });
+      redis_client.get('scr_out5_src').then(function(data){
+        scr_out5_src = data;
+      });
+      redis_client.get('scr_out6_src').then(function(data){
+        scr_out6_src = data;
+      });
+      redis_client.get('scr_out1_dst').then(function(data){
+        scr_out1_dst = data;
+      });
+      redis_client.get('scr_out2_dst').then(function(data){
+        scr_out2_dst = data;
+      });
+      redis_client.get('scr_out3_dst').then(function(data){
+        scr_out3_dst = data;
+      });
+      redis_client.get('scr_out4_dst').then(function(data){
+        scr_out4_dst = data;
+      });
+      redis_client.get('scr_out5_dst').then(function(data){
+        scr_out5_dst = data;
+      });
+      redis_client.get('scr_out6_dst').then(function(data){
+        scr_out6_dst = data;
+      });
+      redis_client.get('scr_out1_config').then(function(data){
+        scr_out1_config = data;
+      });
+      redis_client.get('scr_out2_config').then(function(data){
+        scr_out2_config = data;
+      });
+      redis_client.get('scr_out3_config').then(function(data){
+        scr_out3_config = data;
+      });
+      redis_client.get('scr_out4_config').then(function(data){
+        scr_out4_config = data;
+      });
+      redis_client.get('scr_out5_config').then(function(data){
+        scr_out5_config = data;
+      });
+      redis_client.get('scr_out6_config').then(function(data){
+        scr_out6_config = data;
+      });
+
+
       // config URL, images 만 redirect 허용, 나머지는 모드 index.html 
       if(url == '/resource/coretrust_logo.png'){
         redirect_url = './resource/coretrust_logo.png';
@@ -39,66 +118,7 @@ var app = http.createServer(function(request,response){
       }
       else{
         if(url == '/config'){
-             
-          redis_client.get('scr_ip').then(function(data){
-            scr_ip = data;
-          });
-          redis_client.get('scr_out1_name').then(function(data){
-            scr_out1_name = data;
-          });
-          redis_client.get('scr_out2_name').then(function(data){
-            scr_out2_name = data;
-          });
-          redis_client.get('scr_out3_name').then(function(data){
-            scr_out3_name = data;
-          });
-          redis_client.get('scr_out4_name').then(function(data){
-            scr_out4_name = data;
-          });
-          redis_client.get('scr_out5_name').then(function(data){
-            scr_out5_name = data;
-          });
-          redis_client.get('scr_out6_name').then(function(data){
-            scr_out6_name = data;
-          });
-          redis_client.get('scr_out1_src').then(function(data){
-            scr_out1_src = data;
-          });
-          redis_client.get('scr_out2_src').then(function(data){
-            scr_out2_src = data;
-          });
-          redis_client.get('scr_out3_src').then(function(data){
-            scr_out3_src = data;
-          });
-          redis_client.get('scr_out4_src').then(function(data){
-            scr_out4_src = data;
-          });
-          redis_client.get('scr_out5_src').then(function(data){
-            scr_out5_src = data;
-          });
-          redis_client.get('scr_out6_src').then(function(data){
-            scr_out6_src = data;
-          });
-          redis_client.get('scr_out1_dst').then(function(data){
-            scr_out1_dst = data;
-          });
-          redis_client.get('scr_out2_dst').then(function(data){
-            scr_out2_dst = data;
-          });
-          redis_client.get('scr_out3_dst').then(function(data){
-            scr_out3_dst = data;
-          });
-          redis_client.get('scr_out4_dst').then(function(data){
-            scr_out4_dst = data;
-          });
-          redis_client.get('scr_out5_dst').then(function(data){
-            scr_out5_dst = data;
-          });
-          redis_client.get('scr_out6_dst').then(function(data){
-            scr_out6_dst = data;
-          });
-          console.log('config - read from redis, ip -', scr_ip);
-
+                    
           const contents = HTMLContents.templateHTML_config(
               scr_ip,
               scr_out1_name,scr_out2_name,scr_out3_name,scr_out4_name,scr_out5_name,scr_out6_name,
@@ -108,11 +128,23 @@ var app = http.createServer(function(request,response){
           response.writeHead(200);
           response.end(contents); 
         }
-        else{          
+        else{    
+          const contents = HTMLContents.templateHTML_level(
+            scr_ip,
+            scr_out1_name,scr_out2_name,scr_out3_name,scr_out4_name,scr_out5_name,scr_out6_name,
+            scr_out1_src,scr_out2_src,scr_out3_src,scr_out4_src,scr_out5_src,scr_out6_src,
+            scr_out1_dst,scr_out2_dst,scr_out3_dst,scr_out4_dst,scr_out5_dst,scr_out6_dst,
+            scr_out1_config,scr_out2_config,scr_out3_config,scr_out4_config,scr_out5_config,scr_out6_config     
+           );
+          response.writeHead(200);
+          response.end(contents); 
+
+          /*
           fs.readFile(redirect_url, 'utf8', function(err, data){
             response.writeHead(200);
             response.end(data);  
           });
+          */
         }          
       }  
     }else if(request.method == 'POST'){
@@ -120,8 +152,14 @@ var app = http.createServer(function(request,response){
       request.on('data', function(data){
         if(url == '/level_config'){
           var out = qs.parse(data.toString());
-          console.log('out1: ' + out.out1_config);
-          
+               
+          redis_client.set('scr_out1_config', out.out1_config);
+          redis_client.set('scr_out2_config', out.out2_config);
+          redis_client.set('scr_out3_config', out.out3_config);
+          redis_client.set('scr_out4_config', out.out4_config);
+          redis_client.set('scr_out5_config', out.out5_config);
+          redis_client.set('scr_out6_config', out.out6_config);
+
           // string template 
           var outstr =  `
             out1 : ${out.out1_config}    
